@@ -1,3 +1,4 @@
+package StepDefs;
 import cucumber.api.java.en.Given;
 
 import cucumber.api.java.en.Then;
@@ -6,15 +7,19 @@ import cucumber.api.java.en.When;
 
 
 
-public class stepdefs {
-
-
+public class Dashboard {
 
 	@Given("User Login to Dashboard")
 
 	public void user_Login_to_Dashboard() {
 
 		// Write code here that turns the phrase above into concrete actions
+		
+		//https://partner-de.sb-testsb0208.sisu.sh/#!/login
+
+		//testuser0608@sisu.com
+
+		//1q2w3e4r
 
 		throw new cucumber.api.PendingException();
 
