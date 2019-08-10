@@ -34,7 +34,7 @@ Feature: Create Certificate
     Given User Login to Dashboard 
     When User clicks on ‘create subagents'
     And User enters subagent details
-    Then Subagent created is displayed in the list
+    Then Subagent is created and displayed
     
    Scenario: View subagents
     Given User Login to Dashboard 

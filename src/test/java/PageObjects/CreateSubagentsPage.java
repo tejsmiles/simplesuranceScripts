@@ -1,5 +1,6 @@
 package PageObjects;
 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,9 +54,14 @@ public class CreateSubagentsPage extends PageObjectCommons {
 		this.inputPasswordConfirm.sendKeys(password);
 	}
 	
-	public void userLogin() {
+	public void createSubagent() {
 		this.inputPassword.submit();
 		//TODO look for created agent in list
+		//tr/td[3]
 	}
-
+	
+	public void viewSubagents() {
+		//TODO Ihre bereits angelegten Nutzer
+	}
+	
 }
