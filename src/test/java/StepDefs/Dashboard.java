@@ -1,6 +1,12 @@
 package StepDefs;
+import PageObjects.CardDetailsPage;
+import PageObjects.CertificateDisplayPage;
+import PageObjects.CreateCertificatePage;
+import PageObjects.CreateSubagentsPage;
 import PageObjects.DashboardPage;
 import PageObjects.LoginPage;
+import PageObjects.SearchFunctionalityPage;
+import PageObjects.Simulator3DSecure;
 import cucumber.api.java.en.Given;
 
 import cucumber.api.java.en.Then;
@@ -12,104 +18,137 @@ import cucumber.api.java.en.When;
 public class Dashboard extends FunctionalTest{
 
 	String baseURL= "https://beta.caspar-health.com/en/#/user/sign_in";
+
+	private LoginPage loginPage;
+	private DashboardPage dashboardPage;
+	private CreateCertificatePage createCertificatePage;
+	private CardDetailsPage cardDetailsPage;
+	private Simulator3DSecure simulator3DSecure;
+	private CertificateDisplayPage certificateDisplayPage;
+	private SearchFunctionalityPage searchFunctionalityPage;
+
+	private CreateSubagentsPage createSubagentsPage;
 	
 	@Given("User Login to Dashboard")
 	public void user_Login_to_Dashboard() {
-		// Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		driver.get(baseURL);
+		this.loginPage = new LoginPage(driver, wait);
+		this.loginPage.fillUserName("testuser0608@sisu.com");
+		this.loginPage.fillPassword("1q2w3e4r");
+		this.dashboardPage = this.loginPage.userLogin();
 	}
 
 	@When("User clicks on ‘create certificate'")
 	public void user_clicks_on_create_certificate() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.createCertificatePage = this.dashboardPage.clickCreateCertificate();
+		
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User enters the Product and Customer information")
 	public void user_enters_the_Product_and_Customer_information() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.createCertificatePage.fillProductCategory("Smartphone - AllianzGL");
+		this.createCertificatePage.fillProductPrice("750-1000€");
+		this.createCertificatePage.selectInsurancePeriod(1);
+		this.createCertificatePage.checkTheftProtection();
+		this.createCertificatePage.fillSerialNumber("12345");
+		this.createCertificatePage.fillEmail("test@xyz.com");
+		this.createCertificatePage.fillFirstName("User");
+		this.createCertificatePage.fillLastName("Tester");
+		this.createCertificatePage.fillStreetName("Customer Street");
+		this.createCertificatePage.fillStreetNumber("2");
+		this.createCertificatePage.fillZip("10551");
+		this.createCertificatePage.fillCity("Berlin");
+		this.createCertificatePage.checkConfirmationBoxes();
+		this.createCertificatePage.clickCreateCertificate();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User completes the payment")
 	public void user_completes_the_payment() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.createCertificatePage.selectVisaPayment();
+		this.cardDetailsPage = this.createCertificatePage.clickProceedPayment();
+		this.simulator3DSecure = this.cardDetailsPage.clickProceedPayment();
+		this.certificateDisplayPage = this.simulator3DSecure.clickSubmit();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@Then("Certificate is available for download")
 	public void certificate_is_available_for_download() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.certificateDisplayPage.downloadCertificate();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User clicks on ‘search functionality'")
 	public void user_clicks_on_search_functionality() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.searchFunctionalityPage = this.dashboardPage.clickSearchFunctionality();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User enters the Zertifikatsnummer")
 	public void user_enters_the_Zertifikatsnummer() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.searchFunctionalityPage.fillCertificateNumber("100000839943");
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User clicks search")
 	public void user_clicks_search() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.searchFunctionalityPage.search();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@Then("Certificate with Zertifikatsnummer is displayed")
 	public void certificate_with_Zertifikatsnummer_is_displayed() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.searchFunctionalityPage.seeText("100000839943");
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User enters the customer email")
 	public void user_enters_the_customer_email() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.searchFunctionalityPage.fillCustomerEmail("test@abc.com");
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User clicks on first certificate from the list")
 	public void user_clicks_on_first_certificate_from_the_list() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.certificateDisplayPage = this.searchFunctionalityPage.viewFirstCertificate();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@Then("Certificate is displayed")
 	public void certificate_is_displayed() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.certificateDisplayPage.downloadCertificate();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User clicks on ‘create subagents'")
 	public void user_clicks_on_create_subagents() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.createSubagentsPage = this.dashboardPage.clickCreateSubagents();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@When("User enters subagent details")
 	public void user_enters_subagent_details() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.createSubagentsPage.fillFirstName("SubAgent");
+		this.createSubagentsPage.fillLastName("Agent");
+		this.createSubagentsPage.fillEmail("subagent@agent.com");
+		this.createSubagentsPage.fillPassword("12345678");
+		this.createSubagentsPage.fillPasswordConfirm("12345678");
+		this.createSubagentsPage.createSubagent();
+		//throw new cucumber.api.PendingException();
 	}
 
 	@Then("Subagent is created and displayed")
 	public void subagent_is_created_and_displayed() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.createSubagentsPage.viewSubagent("subagent@agent.com");
+		//throw new cucumber.api.PendingException();
 	}
 
 	@Then("Subagent list is displayed")
 	public void subagent_list_is_displayed() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		this.createSubagentsPage.viewSubagent("Ihre bereits angelegten Nutzer");
+		//throw new cucumber.api.PendingException();
 	}
-
-
 
 }
 

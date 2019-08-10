@@ -36,12 +36,12 @@ public class SearchFunctionalityPage extends PageObjectCommons {
 		this.inputCustomerEmail.sendKeys(email);
 	}
 
-	public void searchWithCertificateNumber() {
+	public void search() {
 		this.inputCertificateNumber.submit();
 	}
-
-	public void searchWithCustomerEmail() {
-		this.inputCustomerEmail.submit();
+	
+	public void seeText(String text) {
+		driver.getPageSource().contains(text);
 	}
 	
 	public CertificateDisplayPage viewFirstCertificate() {
@@ -50,5 +50,7 @@ public class SearchFunctionalityPage extends PageObjectCommons {
 		}
 		return new CertificateDisplayPage(driver, wait);
 	}
+	
+	
 
 }

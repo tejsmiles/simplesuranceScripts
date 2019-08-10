@@ -51,7 +51,15 @@ public class CreateCertificatePage extends PageObjectCommons{
 	@FindAll({@FindBy(xpath="//div[@class=\"checkbox\"]/label/input")})
 	List<WebElement> confirmationCheckboxes;
 	////div[@class="checkbox"]/label/input[@class="ng-valid-parse"]
+	
+	@FindBy(xpath="//button/span[text()=\"Schutzbrief abschließen\"]")
+	WebElement buttonCreateCertificate;
 
+	@FindBy(id="payment-visa")
+	WebElement radioPaymentVisa;
+	
+	@FindBy(xpath="//button[text()=\"Kauf abschließen\"]")
+	WebElement buttonProceedPayment;
 	
 	public CreateCertificatePage(WebDriver driver, WebDriverWait wait) {
 		super(driver, wait);
@@ -122,4 +130,16 @@ public class CreateCertificatePage extends PageObjectCommons{
 		}
 	}
 	
+	public void clickCreateCertificate() {
+		this.buttonCreateCertificate.click();
+	}
+	
+	public void selectVisaPayment() {
+		this.radioPaymentVisa.click();
+	}
+	
+	public CardDetailsPage clickProceedPayment() {
+		this.buttonProceedPayment.click();
+		return new CardDetailsPage(driver, wait);
+	}
 }

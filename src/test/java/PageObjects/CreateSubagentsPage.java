@@ -56,12 +56,10 @@ public class CreateSubagentsPage extends PageObjectCommons {
 	
 	public void createSubagent() {
 		this.inputPassword.submit();
-		//TODO look for created agent in list
-		//tr/td[3]
 	}
 	
-	public void viewSubagents() {
-		//TODO Ihre bereits angelegten Nutzer
+	public void viewSubagent(String text) {
+		driver.getPageSource().contains(text);
 	}
 	
 }
