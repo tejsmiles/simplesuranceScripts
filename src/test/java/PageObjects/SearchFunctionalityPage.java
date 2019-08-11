@@ -17,8 +17,12 @@ public class SearchFunctionalityPage extends PageObjectCommons {
 
 	@FindBy(id="filterByEmail")
 	WebElement inputCustomerEmail;
+	
+	@FindBy(xpath="//span[@ng-click=\"getCertificates()\"]")
+	WebElement buttonSearch;
+	
 
-	@FindAll({@FindBy(xpath="//td[@at-attribute=\"certificateNumber\"]/a]")})
+	@FindAll({@FindBy(xpath="//td[@at-attribute=\"certificateNumber\"]/a")})
 	List<WebElement> certificateList;
 
 
@@ -37,7 +41,7 @@ public class SearchFunctionalityPage extends PageObjectCommons {
 	}
 
 	public void search() {
-		this.inputCertificateNumber.submit();
+		this.buttonSearch.click();
 	}
 	
 	public void seeText(String text) {
@@ -45,7 +49,7 @@ public class SearchFunctionalityPage extends PageObjectCommons {
 	}
 	
 	public CertificateDisplayPage viewFirstCertificate() {
-		if(this.certificateList.size()>0) {
+		if(!this.certificateList.isEmpty()) {
 			this.certificateList.get(0).click();
 		}
 		return new CertificateDisplayPage(driver, wait);

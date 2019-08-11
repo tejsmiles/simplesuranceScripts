@@ -1,4 +1,10 @@
 package StepDefs;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Random;
+
+import org.junit.Test;
+
 import PageObjects.CardDetailsPage;
 import PageObjects.CertificateDisplayPage;
 import PageObjects.CreateCertificatePage;
@@ -7,17 +13,10 @@ import PageObjects.DashboardPage;
 import PageObjects.LoginPage;
 import PageObjects.SearchFunctionalityPage;
 import PageObjects.Simulator3DSecure;
-import cucumber.api.java.en.Given;
-
-import cucumber.api.java.en.Then;
-
-import cucumber.api.java.en.When;
-
-
 
 public class Dashboard extends FunctionalTest{
 
-	String baseURL= "https://beta.caspar-health.com/en/#/user/sign_in";
+	String baseURL= "https://partner-de.sb-testsb0208.sisu.sh/#!/";
 
 	private LoginPage loginPage;
 	private DashboardPage dashboardPage;
@@ -26,29 +25,21 @@ public class Dashboard extends FunctionalTest{
 	private Simulator3DSecure simulator3DSecure;
 	private CertificateDisplayPage certificateDisplayPage;
 	private SearchFunctionalityPage searchFunctionalityPage;
-
 	private CreateSubagentsPage createSubagentsPage;
 	
-	@Given("User Login to Dashboard")
-	public void user_Login_to_Dashboard() {
+	@Test
+	public void scenarioCreateAndDownloadCertificate() throws InterruptedException {
 		driver.get(baseURL);
+		//assertTrue((driver.getCurrentUrl()).contains(baseURL));
+		assertTrue(true);
 		this.loginPage = new LoginPage(driver, wait);
+		assertTrue(loginPage != null);
 		this.loginPage.fillUserName("testuser0608@sisu.com");
 		this.loginPage.fillPassword("1q2w3e4r");
 		this.dashboardPage = this.loginPage.userLogin();
-	}
-
-	@When("User clicks on ‘create certificate'")
-	public void user_clicks_on_create_certificate() {
 		this.createCertificatePage = this.dashboardPage.clickCreateCertificate();
-		
-		//throw new cucumber.api.PendingException();
-	}
-
-	@When("User enters the Product and Customer information")
-	public void user_enters_the_Product_and_Customer_information() {
-		this.createCertificatePage.fillProductCategory("Smartphone - AllianzGL");
-		this.createCertificatePage.fillProductPrice("750-1000€");
+		this.createCertificatePage.fillProductCategory();
+		this.createCertificatePage.fillProductPrice();
 		this.createCertificatePage.selectInsurancePeriod(1);
 		this.createCertificatePage.checkTheftProtection();
 		this.createCertificatePage.fillSerialNumber("12345");
@@ -61,94 +52,89 @@ public class Dashboard extends FunctionalTest{
 		this.createCertificatePage.fillCity("Berlin");
 		this.createCertificatePage.checkConfirmationBoxes();
 		this.createCertificatePage.clickCreateCertificate();
-		//throw new cucumber.api.PendingException();
-	}
-
-	@When("User completes the payment")
-	public void user_completes_the_payment() {
 		this.createCertificatePage.selectVisaPayment();
 		this.cardDetailsPage = this.createCertificatePage.clickProceedPayment();
 		this.simulator3DSecure = this.cardDetailsPage.clickProceedPayment();
 		this.certificateDisplayPage = this.simulator3DSecure.clickSubmit();
-		//throw new cucumber.api.PendingException();
+		this.certificateDisplayPage.downloadCertificate();	
+		this.dashboardPage.userLogout();
 	}
-
-	@Then("Certificate is available for download")
-	public void certificate_is_available_for_download() {
-		this.certificateDisplayPage.downloadCertificate();
-		//throw new cucumber.api.PendingException();
-	}
-
-	@When("User clicks on ‘search functionality'")
-	public void user_clicks_on_search_functionality() {
+	
+	
+	@Test
+	public void scenarioSearchUsingZertifikatsnummer() throws InterruptedException {
+		driver.get(baseURL);
+		this.loginPage = new LoginPage(driver, wait);
+		this.loginPage.fillUserName("testuser0608@sisu.com");
+		this.loginPage.fillPassword("1q2w3e4r");
+		this.dashboardPage = this.loginPage.userLogin();
 		this.searchFunctionalityPage = this.dashboardPage.clickSearchFunctionality();
-		//throw new cucumber.api.PendingException();
-	}
-
-	@When("User enters the Zertifikatsnummer")
-	public void user_enters_the_Zertifikatsnummer() {
 		this.searchFunctionalityPage.fillCertificateNumber("100000839943");
-		//throw new cucumber.api.PendingException();
-	}
-
-	@When("User clicks search")
-	public void user_clicks_search() {
 		this.searchFunctionalityPage.search();
-		//throw new cucumber.api.PendingException();
-	}
-
-	@Then("Certificate with Zertifikatsnummer is displayed")
-	public void certificate_with_Zertifikatsnummer_is_displayed() {
 		this.searchFunctionalityPage.seeText("100000839943");
-		//throw new cucumber.api.PendingException();
+		this.dashboardPage.userLogout();
 	}
-
-	@When("User enters the customer email")
-	public void user_enters_the_customer_email() {
+	
+	@Test
+	public void scenarioSearchUsingCustomerEmail() throws InterruptedException {
+		driver.get(baseURL);
+		this.loginPage = new LoginPage(driver, wait);
+		this.loginPage.fillUserName("testuser0608@sisu.com");
+		this.loginPage.fillPassword("1q2w3e4r");
+		this.dashboardPage = this.loginPage.userLogin();
+		this.searchFunctionalityPage = this.dashboardPage.clickSearchFunctionality();
 		this.searchFunctionalityPage.fillCustomerEmail("test@abc.com");
-		//throw new cucumber.api.PendingException();
+		this.searchFunctionalityPage.search();
+		this.searchFunctionalityPage.seeText("test@abc.com");
+		this.dashboardPage.userLogout();
 	}
-
-	@When("User clicks on first certificate from the list")
-	public void user_clicks_on_first_certificate_from_the_list() {
+	
+	@Test
+	public void scenarioViewCertificatesFromList() throws InterruptedException {
+		driver.get(baseURL);
+		this.loginPage = new LoginPage(driver, wait);
+		this.loginPage.fillUserName("testuser0608@sisu.com");
+		this.loginPage.fillPassword("1q2w3e4r");
+		this.dashboardPage = this.loginPage.userLogin();
+		this.searchFunctionalityPage = this.dashboardPage.clickSearchFunctionality();
 		this.certificateDisplayPage = this.searchFunctionalityPage.viewFirstCertificate();
-		//throw new cucumber.api.PendingException();
-	}
-
-	@Then("Certificate is displayed")
-	public void certificate_is_displayed() {
 		this.certificateDisplayPage.downloadCertificate();
-		//throw new cucumber.api.PendingException();
+		this.dashboardPage.userLogout();
 	}
-
-	@When("User clicks on ‘create subagents'")
-	public void user_clicks_on_create_subagents() {
+	
+	@Test
+	public void scenarioCreateSubagents() throws InterruptedException {
+		driver.get(baseURL);
+		this.loginPage = new LoginPage(driver, wait);
+		this.loginPage.fillUserName("testuser0608@sisu.com");
+		this.loginPage.fillPassword("1q2w3e4r");
+		this.dashboardPage = this.loginPage.userLogin();
 		this.createSubagentsPage = this.dashboardPage.clickCreateSubagents();
-		//throw new cucumber.api.PendingException();
-	}
-
-	@When("User enters subagent details")
-	public void user_enters_subagent_details() {
 		this.createSubagentsPage.fillFirstName("SubAgent");
 		this.createSubagentsPage.fillLastName("Agent");
-		this.createSubagentsPage.fillEmail("subagent@agent.com");
+		int randomUserId = (new Random()).nextInt(9999);
+		String emailAddress= "subagent" +randomUserId + "@agent.com";
+		this.createSubagentsPage.fillEmail(emailAddress);
 		this.createSubagentsPage.fillPassword("12345678");
 		this.createSubagentsPage.fillPasswordConfirm("12345678");
 		this.createSubagentsPage.createSubagent();
-		//throw new cucumber.api.PendingException();
+		this.createSubagentsPage.viewSubagent(emailAddress);
+		this.dashboardPage.userLogout();
 	}
-
-	@Then("Subagent is created and displayed")
-	public void subagent_is_created_and_displayed() {
-		this.createSubagentsPage.viewSubagent("subagent@agent.com");
-		//throw new cucumber.api.PendingException();
-	}
-
-	@Then("Subagent list is displayed")
-	public void subagent_list_is_displayed() {
+	
+	@Test
+	public void scenarioViewSubagents() throws InterruptedException {
+		driver.get(baseURL);
+		this.loginPage = new LoginPage(driver, wait);
+		this.loginPage.fillUserName("testuser0608@sisu.com");
+		this.loginPage.fillPassword("1q2w3e4r");
+		this.dashboardPage = this.loginPage.userLogin();
+		this.createSubagentsPage = this.dashboardPage.clickCreateSubagents();
 		this.createSubagentsPage.viewSubagent("Ihre bereits angelegten Nutzer");
-		//throw new cucumber.api.PendingException();
+		this.dashboardPage.userLogout();
 	}
+
+
 
 }
 

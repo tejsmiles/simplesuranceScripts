@@ -17,6 +17,9 @@ public class DashboardPage extends PageObjectCommons{
 	@FindBy(partialLinkText="Nutzerverwaltung")
 	WebElement  creationOfSubagents;
 	
+	@FindBy(xpath="//button[@ng-click=\"logOut()\"]")
+	WebElement  buttonLogout;
+	
 	public DashboardPage(WebDriver driver, WebDriverWait wait) {
 		super(driver, wait);
 	}
@@ -36,4 +39,7 @@ public class DashboardPage extends PageObjectCommons{
 		return new CreateSubagentsPage(driver, wait);
 	}
 	
+	public void userLogout() {
+		this.buttonLogout.click();
+	}
 }

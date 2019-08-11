@@ -1,5 +1,11 @@
 package StepDefs;
 
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
@@ -17,10 +23,23 @@ public class FunctionalTest {
 	@BeforeClass
 	public static void setUp() {
 
+		InputStream input = null;
+		Properties properties = null;
+		try {
+			input = new FileInputStream("simplesurance.properties");
+			properties = new Properties();
+			properties.load(input);
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		} 
+		
+		System.setProperty("webdriver.chrome.driver",properties.getProperty("webdriver.chrome.driver"));
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		driver.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
-		wait=new WebDriverWait(driver, 20);
+		wait=new WebDriverWait(driver, 10);
 	}
 
 	@AfterClass

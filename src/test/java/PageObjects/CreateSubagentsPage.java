@@ -23,6 +23,10 @@ public class CreateSubagentsPage extends PageObjectCommons {
 	@FindBy(id="subagent-create-password-confirm")
 	WebElement inputPasswordConfirm;
 	
+	@FindBy(xpath="//button[@ng-click=\"create()\"]")
+	WebElement buttonCreate;
+	
+	
 	
 	public CreateSubagentsPage(WebDriver driver, WebDriverWait wait) {
 		super(driver, wait);
@@ -55,7 +59,7 @@ public class CreateSubagentsPage extends PageObjectCommons {
 	}
 	
 	public void createSubagent() {
-		this.inputPassword.submit();
+		this.buttonCreate.click();;
 	}
 	
 	public void viewSubagent(String text) {
