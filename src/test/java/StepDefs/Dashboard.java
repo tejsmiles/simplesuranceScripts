@@ -1,5 +1,4 @@
 package StepDefs;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 
@@ -30,10 +29,7 @@ public class Dashboard extends FunctionalTest{
 	@Test
 	public void scenarioCreateAndDownloadCertificate() throws InterruptedException {
 		driver.get(baseURL);
-		//assertTrue((driver.getCurrentUrl()).contains(baseURL));
-		assertTrue(true);
 		this.loginPage = new LoginPage(driver, wait);
-		assertTrue(loginPage != null);
 		this.loginPage.fillUserName("testuser0608@sisu.com");
 		this.loginPage.fillPassword("1q2w3e4r");
 		this.dashboardPage = this.loginPage.userLogin();
