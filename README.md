@@ -11,3 +11,13 @@ Place the chromedriver executable in lib folder (I have already places the execu
 It is a maven based project, so all jar files will be automatically added.
 
 I have used Page Object Model for setting up the Tests.
+
+For execution, right click on src/tests/java/StepDefs/Dashboard.java and select "Run as" -> "JUnit Test" 
+
+The repository contains 2 solutions
+1) Simple Selenium Webdriver (src/tests/java/StepDefs/Dashboard.java)
+2) Selenium Webdriver with cucumber (src/tests/java/StepDefs/DashboardSteps.java)
+ and the Gherkin feature file (src/tests/resources/dashboard.feature)
+
+
+
