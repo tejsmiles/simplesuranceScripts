@@ -20,4 +20,6 @@ The repository contains 2 solutions
  and the Gherkin feature file (src/tests/resources/dashboard.feature)
 
 
+Assertions/logs/screenshots can be configured to get more insights into test results and contribute to the lightweight test reports.
+
 
